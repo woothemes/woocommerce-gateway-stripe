@@ -547,7 +547,7 @@ class WC_Stripe_Payment_Request {
 				'clear_cart'                => wp_create_nonce( 'wc-stripe-clear-cart' ),
 			],
 			'i18n'            => [
-				'no_guest_checkout' => __( 'You must be logged in to checkout.', 'woocommerce-gateway-stripe' ),
+				'no_guest_checkout' => __( 'You must be logged in to checkout with Payment Request Buttons.', 'woocommerce-gateway-stripe' ),
 				'no_prepaid_card'   => __( 'Sorry, we\'re not accepting prepaid cards at this time.', 'woocommerce-gateway-stripe' ),
 				/* translators: Do not translate the [option] placeholder */
 				'unknown_shipping'  => __( 'Unknown shipping option "[option]".', 'woocommerce-gateway-stripe' ),
