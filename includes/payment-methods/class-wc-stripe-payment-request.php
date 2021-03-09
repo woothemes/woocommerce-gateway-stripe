@@ -176,6 +176,32 @@ class WC_Stripe_Payment_Request {
 	}
 
 	/**
+	 * Checks wether authentication is required for the Payment Request Button.
+	 *
+	 * @since  5.0.0
+	 * @return bool
+	 */
+	public function is_authentication_required() {
+		// If guest checkout is disabled, authentication might be required.
+		if ( 'no' === get_option( 'woocommerce_enable_guest_checkout', 'yes' ) ) {
+			// If signup from checkout is disabled, authentication is required.
+			if ( 'no' === get_option( 'woocommerce_enable_signup_and_login_from_checkout', 'no' ) ) {
+				return true;
+			}
+			// If automatically generate username/password are disabled, the Payment Request API
+			// can't include any of those fields, so authentication is required.
+			if (
+				'no' === get_option( 'woocommerce_registration_generate_username', 'yes' ) ||
+				'no' === get_option( 'woocommerce_registration_generate_password', 'yes' )
+			) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
 	 * Gets the button type.
 	 *
 	 * @since   4.0.0
@@ -533,7 +559,7 @@ class WC_Stripe_Payment_Request {
 				'needs_shipping'       => WC()->cart->needs_shipping() ? 'yes' : 'no',
 				// Defaults to 'required' to match how core initializes this option.
 				'needs_payer_phone'    => 'required' === get_option( 'woocommerce_checkout_phone_field', 'required' ),
-				'needs_authentication' => 'no' === get_option( 'woocommerce_enable_guest_checkout', 'yes' ) && 'no' === get_option( 'woocommerce_enable_signup_and_login_from_checkout', 'no' ),
+				'needs_authentication' => $this->is_authentication_required(),
 			],
 			'button'          => [
 				'type'         => $this->get_button_type(),
