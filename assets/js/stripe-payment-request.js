@@ -569,6 +569,12 @@ jQuery( function( $ ) {
 			// First, mark the body so we know a payment request button was used.
 			// This way error handling can any display errors in the most appropriate place.
 			prButton.on( 'click', function ( evt ) {
+				// If guest checkout is disabled and user is not authenticated, display error message.
+				if ( wc_stripe_payment_request_params.checkout.needs_authentication ) {
+					wc_stripe_payment_request.displayErrorMessage( wc_stripe_payment_request.getErrorMessageHTML( wc_stripe_payment_request_params.i18n.no_guest_checkout ) );
+					evt.preventDefault();
+					return;
+				}
 				$( 'body' ).addClass( 'woocommerce-stripe-prb-clicked' );
 			});
 

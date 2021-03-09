@@ -521,17 +521,19 @@ class WC_Stripe_Payment_Request {
 				'clear_cart'                => wp_create_nonce( 'wc-stripe-clear-cart' ),
 			],
 			'i18n'            => [
-				'no_prepaid_card'  => __( 'Sorry, we\'re not accepting prepaid cards at this time.', 'woocommerce-gateway-stripe' ),
+				'no_guest_checkout' => __( 'You must be logged in to checkout.', 'woocommerce-gateway-stripe' ),
+				'no_prepaid_card'   => __( 'Sorry, we\'re not accepting prepaid cards at this time.', 'woocommerce-gateway-stripe' ),
 				/* translators: Do not translate the [option] placeholder */
-				'unknown_shipping' => __( 'Unknown shipping option "[option]".', 'woocommerce-gateway-stripe' ),
+				'unknown_shipping'  => __( 'Unknown shipping option "[option]".', 'woocommerce-gateway-stripe' ),
 			],
 			'checkout'        => [
-				'url'               => wc_get_checkout_url(),
-				'currency_code'     => strtolower( get_woocommerce_currency() ),
-				'country_code'      => substr( get_option( 'woocommerce_default_country' ), 0, 2 ),
-				'needs_shipping'    => WC()->cart->needs_shipping() ? 'yes' : 'no',
+				'url'                  => wc_get_checkout_url(),
+				'currency_code'        => strtolower( get_woocommerce_currency() ),
+				'country_code'         => substr( get_option( 'woocommerce_default_country' ), 0, 2 ),
+				'needs_shipping'       => WC()->cart->needs_shipping() ? 'yes' : 'no',
 				// Defaults to 'required' to match how core initializes this option.
-				'needs_payer_phone' => 'required' === get_option( 'woocommerce_checkout_phone_field', 'required' ),
+				'needs_payer_phone'    => 'required' === get_option( 'woocommerce_checkout_phone_field', 'required' ),
+				'needs_authentication' => 'no' === get_option( 'woocommerce_enable_guest_checkout', 'yes' ) && 'no' === get_option( 'woocommerce_enable_signup_and_login_from_checkout', 'no' ),
 			],
 			'button'          => [
 				'type'         => $this->get_button_type(),
