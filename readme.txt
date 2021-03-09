@@ -130,5 +130,6 @@ If you get stuck, you can ask for help in the Plugin Forum.
 
 * Add - Display time of last Stripe webhook in settings.
 * Fix - Payment Request Buttons for Chinese provinces in Chrome.
+* Fix - Payment Request Buttons fail when guest checkout is disabled.
 
 [See changelog for all versions](https://raw.githubusercontent.com/woocommerce/woocommerce-gateway-stripe/trunk/changelog.txt).
